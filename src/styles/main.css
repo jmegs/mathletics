@@ -1,3 +1,6 @@
+/* prevent double tap to zoom */
+* { touch-action: manipulation !important}
+
 html,
 body,
 #app {
@@ -5,3 +8,4 @@ body,
   margin: 0;
   padding: 0;
 }
+

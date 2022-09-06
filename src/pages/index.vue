@@ -49,7 +49,7 @@ function handleFn(id: CalcFunction) {
       </button>
     </div>
     <div class="Target">
-      {{ operand }}
+      <h1>{{ operand }}</h1>
     </div>
     <div class="Plates">
       <div v-if="show" class="h-full flex gap-3 flex-wrap items-center justify-center">
@@ -80,6 +80,13 @@ function handleFn(id: CalcFunction) {
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: pan-x pan-y;
+  user-select: none;
+}
+
+.Target h1 {
+  touch-action: none;
+  user-select: none;
 }
 
 .Bars {
