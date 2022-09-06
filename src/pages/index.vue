@@ -52,7 +52,7 @@ function handleFn(id: CalcFunction) {
       <h1>{{ operand }}</h1>
     </div>
     <div class="Plates">
-      <div v-if="show" class="h-full flex gap-3 flex-wrap items-center justify-center">
+      <div v-if="show" class="flex px-8 mx-auto gap-3 flex-wrap items-center justify-center">
         <Plate v-for="value in plates" :value="value" />
       </div>
     </div>
