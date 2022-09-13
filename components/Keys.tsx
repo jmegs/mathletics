@@ -13,8 +13,8 @@ export default function Keys({ handleDigit, handleFn }: KeysProps) {
       <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(5)}>5</button>
       <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(6)}>6</button>
       <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(1)}>1</button>
-      <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(3)}>3</button>
       <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(2)}>2</button>
+      <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(3)}>3</button>
       <button className="bg-red-200 active:opacity-75" onClick={() => handleFn("CLEAR")}>⌧</button>
       <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(0)}>0</button>
       <button className="bg-blue-200 active:opacity-75" onClick={() => handleFn("ENTER")}>↵</button>
