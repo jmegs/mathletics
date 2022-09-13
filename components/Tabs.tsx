@@ -13,6 +13,7 @@ const Tabs = ({ active, onChange }: TabsProps) => {
       {Object.keys(BARS).map((bar) => {
         return (
           <button
+            key={bar}
             onClick={() => onChange(bar as Bar)}
             className={`${active === bar ? 'bg-gray-100' : ''} px-3 py-1 rounded-sm`}
           >{bar}</button>)

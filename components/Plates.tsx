@@ -35,7 +35,7 @@ export default function Plates({ value }: PlatesProps) {
     <div>
       {value && (
         <div className="flex px-8 mx-auto gap-3 flex-wrap items-center justify-center">
-          {value.map((p) => <Plate val={p} />)}
+          {value.map((p, i) => <Plate key={p + i} val={p} />)}
         </div>
       )}
     </div>
