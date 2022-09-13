@@ -1,0 +1,14 @@
+{
+  "name": "Mathletics",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ]
+}
