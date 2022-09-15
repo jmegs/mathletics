@@ -14,3 +14,6 @@ export const PLATES = [
   5,
   2.5
 ] as const
+
+export type Plate = typeof PLATES[number]
+export type Bar = keyof typeof BARS
