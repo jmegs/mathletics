@@ -1,23 +1,83 @@
-interface KeysProps {
-  handleDigit: (num: number) => void,
-  handleFn: (fn: string) => void
-}
+import { useAtom } from "jotai"
+import { useResetAtom, useUpdateAtom } from "jotai/utils"
+import type { Bar } from "../constants"
+import type { PropsWithChildren } from 'react'
+import { barAtom, opAtom, showAtom, displayAtom } from "../state"
 
-export default function Keys({ handleDigit, handleFn }: KeysProps) {
+
+const Digit = ({ val }: PropsWithChildren<{ val: number }>) => {
+  const setNum = useUpdateAtom(displayAtom)
+
   return (
-    <div className="grid grid-cols-3 grid-rows-[repeat(4,64px)] gap-3">
-      <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(7)}>7</button>
-      <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(8)}>8</button>
-      <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(9)}>9</button>
-      <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(4)}>4</button>
-      <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(5)}>5</button>
-      <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(6)}>6</button>
-      <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(1)}>1</button>
-      <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(2)}>2</button>
-      <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(3)}>3</button>
-      <button className="bg-red-200 active:opacity-75" onClick={() => handleFn("CLEAR")}>⌧</button>
-      <button className="bg-slate-100 active:opacity-75" onClick={() => handleDigit(0)}>0</button>
-      <button className="bg-blue-200 active:opacity-75" onClick={() => handleFn("ENTER")}>↵</button>
-    </div>
+    <button
+      className="bg-surface-2 active:opacity-75"
+      onClick={() => setNum(val)}
+    >
+      {val}
+    </button>
   )
 }
+
+const BarTab = ({ bar, children }: PropsWithChildren<{ bar: Bar }>) => {
+  const [currentBar, setBar] = useAtom(barAtom)
+  const sx = `${bar === currentBar ? 'bg-surface-2' : 'bg-surface-1'}`
+  return (
+    <button
+      className={sx}
+      onClick={() => setBar(bar)}
+    >
+      {children}
+    </button>
+  )
+}
+
+const Clear = () => {
+  const [, setShow] = useAtom(showAtom)
+  const resetNum = useResetAtom(displayAtom)
+  return (
+    <button
+      className="bg-surface-2 active:opacity-75"
+      onClick={() => {
+        resetNum()
+        setShow(false)
+      }}
+    >
+      CLR
+    </button>
+  )
+}
+
+const Enter = () => {
+  const [_, setShow] = useAtom(showAtom)
+  return (
+    <button
+      className="bg-accent active:opacity-75"
+      onClick={() => setShow(true)}
+    >
+      GO
+    </button>
+  )
+}
+
+
+const Keys = () => (
+  <div className="KeysGrid pb-8 px-4">
+    <BarTab bar="Default">REG</BarTab>
+    <BarTab bar="Bella">BEL</BarTab>
+    <BarTab bar="Trap">HEX</BarTab>
+    <Digit val={7} />
+    <Digit val={8} />
+    <Digit val={9} />
+    <Digit val={4} />
+    <Digit val={5} />
+    <Digit val={6} />
+    <Digit val={1} />
+    <Digit val={2} />
+    <Digit val={3} />
+    <Clear />
+    <Digit val={0} />
+    <Enter />
+  </div>
+)
+
+export default Keys
