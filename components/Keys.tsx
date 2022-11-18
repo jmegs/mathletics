@@ -1,17 +1,13 @@
-import { useAtom } from "jotai"
-import { useResetAtom, useUpdateAtom } from "jotai/utils"
 import type { Bar } from "../constants"
 import type { PropsWithChildren } from 'react'
-import { barAtom, opAtom, showAtom, displayAtom } from "../state"
+import { send, bar as currentBar, clear as clearFn, go } from "../state"
 
 
 const Digit = ({ val }: PropsWithChildren<{ val: number }>) => {
-  const setNum = useUpdateAtom(displayAtom)
-
   return (
     <button
       className="bg-surface-2 active:opacity-75"
-      onClick={() => setNum(val)}
+      onClick={() => send(val)}
     >
       {val}
     </button>
@@ -19,12 +15,11 @@ const Digit = ({ val }: PropsWithChildren<{ val: number }>) => {
 }
 
 const BarTab = ({ bar, children }: PropsWithChildren<{ bar: Bar }>) => {
-  const [currentBar, setBar] = useAtom(barAtom)
-  const sx = `${bar === currentBar ? 'bg-surface-2' : 'bg-surface-1'}`
+  const sx = `${bar === currentBar.value ? 'bg-surface-2' : 'bg-surface-1'}`
   return (
     <button
       className={sx}
-      onClick={() => setBar(bar)}
+      onClick={() => currentBar.value = bar}
     >
       {children}
     </button>
@@ -32,27 +27,21 @@ const BarTab = ({ bar, children }: PropsWithChildren<{ bar: Bar }>) => {
 }
 
 const Clear = () => {
-  const [, setShow] = useAtom(showAtom)
-  const resetNum = useResetAtom(displayAtom)
   return (
     <button
       className="bg-surface-2 active:opacity-75"
-      onClick={() => {
-        resetNum()
-        setShow(false)
-      }}
-    >
+      onClick={clearFn}>
       CLR
     </button>
   )
 }
 
 const Enter = () => {
-  const [_, setShow] = useAtom(showAtom)
+
   return (
     <button
       className="bg-accent active:opacity-75"
-      onClick={() => setShow(true)}
+      onClick={go}
     >
       GO
     </button>
