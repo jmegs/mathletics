@@ -1,29 +1,37 @@
-import { atom } from "jotai"
-import { atomWithReset, RESET } from "jotai/utils"
+import { signal, computed } from "@preact/signals-react"
 import { calculate } from "./helpers"
-import type { Plate, Bar } from "./constants"
+import { type Plate, type Bar } from "./constants"
 
-export const showAtom = atom(false)
-export const barAtom = atom<Bar>("Default")
-export const opAtom = atomWithReset(0)
+export const stack = signal<number[]>([])
+export const bar = signal<Bar>("Default")
+export const show = signal<boolean>(false)
+export const operand = computed<number>(() => Number(stack.value.join('')))
+export const plates = signal<Plate[]>([])
 
-export const displayAtom = atom(
-  (get) => get(opAtom).toString(),
-  (get, set, newValue: number | typeof RESET) => {
-    let show = get(showAtom)
-    const nextValue = (newValue: number | typeof RESET) => {
-      if (newValue === RESET) return 0
-      if (show) {
-        set(showAtom, false)
-        return newValue
-      }
-      let newOp = String(get(opAtom)) + String(newValue)
-      return Number(newOp)
-    }
-    set(opAtom, nextValue(newValue))
+export function send(digit: number) {
+  if (show.value === true) {
+    stack.value = []; show.value = false;
   }
-)
+  stack.value = [...stack.value, digit]
+}
 
-export const platesAtom = atom<Plate[] | null>(
-  (get) => calculate(get(opAtom), get(barAtom))
-)
+export function go() {
+  set()
+  show.value = true
+}
+
+export function clear() {
+  show.value = false
+  stack.value = []
+}
+
+export function changeBarTo(target: Bar) {
+  bar.value = target
+  if (show.value) { set() }
+  
+}
+
+function set() {
+  plates.value = calculate(operand.value, bar.value)
+}
+
