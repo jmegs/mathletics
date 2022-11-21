@@ -1,6 +1,6 @@
 import type { Bar } from "../constants"
 import type { PropsWithChildren } from 'react'
-import { send, bar as currentBar, clear as clearFn, go } from "../state"
+import { send, bar as currentBar, changeBarTo, clear as clearFn, go } from "../state"
 
 
 const Digit = ({ val }: PropsWithChildren<{ val: number }>) => {
@@ -19,7 +19,7 @@ const BarTab = ({ bar, children }: PropsWithChildren<{ bar: Bar }>) => {
   return (
     <button
       className={sx}
-      onClick={() => currentBar.value = bar}
+      onClick={() => changeBarTo(bar)}
     >
       {children}
     </button>

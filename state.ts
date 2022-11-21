@@ -1,5 +1,3 @@
-// import { atom } from "jotai"
-// import { atomWithReset, RESET } from "jotai/utils"
 import { signal, computed } from "@preact/signals-react"
 import { calculate } from "./helpers"
 import { type Plate, type Bar } from "./constants"
@@ -27,6 +25,13 @@ export function clear() {
   stack.value = []
 }
 
+export function changeBarTo(target: Bar) {
+  bar.value = target
+  if (show.value) { set() }
+  
+}
+
 function set() {
   plates.value = calculate(operand.value, bar.value)
 }
+
